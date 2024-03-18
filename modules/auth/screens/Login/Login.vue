@@ -12,10 +12,11 @@
 import SocialForm from '@/modules/auth/components/SocialForm/SocialForm.vue'
 
 const loading = ref<boolean>(false)
+const services = useServices()
 
 const handleGithubLogin = async () => {
   loading.value = true
 
-  // @TODO: Call api
+  services.auth.signinWithGithub()
 }
 </script>

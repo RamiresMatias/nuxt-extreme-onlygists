@@ -1,0 +1,7 @@
+create table 
+  sales (
+    id uuid primary key,
+    gists_id uuid references public.gists (id),
+    customer_email varchar not null,
+    create_at timestamp with time zone default current_timestamp not null
+  )
