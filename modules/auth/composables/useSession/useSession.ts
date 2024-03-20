@@ -1,5 +1,4 @@
-
-export default function useServices() {
+export function useSession() {
 
   const user = useSupabaseUser()
   const services = useServices()
@@ -10,7 +9,7 @@ export default function useServices() {
   }
 
   const logout = async () => {
-    const response: any = await services.logout()
+    const response: any = await services.auth.signOut()
     return response
   }
 
