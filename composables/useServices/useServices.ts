@@ -1,4 +1,5 @@
 import AuthService from '@/modules/auth/services/service'
+import UserServices from '@/modules/users/services/services'
 import type { Database } from '@/libs/supabase/scheme'
 
 export function useServices() {
@@ -8,6 +9,7 @@ export function useServices() {
   return {
     auth: AuthService(supabaseClient, {
       redirectUrl: `${config.public.siteUrl}/auth/github`
-    })
+    }),
+    users: UserServices(supabaseClient)
   }
 }

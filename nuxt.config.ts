@@ -26,7 +26,11 @@ export default defineNuxtConfig({
     }
   },
   imports: {
-    dirs: ['./composables/useMarkdown', './composables/useServices']
+    dirs: [
+      './composables/useMarkdown', 
+      './composables/useServices',
+      './composables/useLogger'
+    ]
   },
   runtimeConfig: {
     public: {

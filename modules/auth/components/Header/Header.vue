@@ -16,7 +16,7 @@
           </button>
         </div>
 
-        <Menu ref="menu" id="header-auth-menu" :model="items" popup></Menu>
+        <Menu ref="menu" :model="items" popup></Menu>
       </div>
     </nav>
   </header>
