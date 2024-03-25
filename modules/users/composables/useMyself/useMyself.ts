@@ -10,7 +10,7 @@ export function useMyself() {
   const { logAndTrack } = useLogger()
   const services = useServices()
   const session = useSession()
-  const loading = ref<Boolean>(true)
+  const loading = ref<boolean>(true)
   const user = ref<User>()
 
   provide<MyselfContextProvider>(myselfKey, { user, loading })

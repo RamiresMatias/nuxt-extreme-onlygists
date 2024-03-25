@@ -3,7 +3,7 @@ export function useSession() {
   const user = useSupabaseUser()
   const services = useServices()
 
-  const isLogged = async () => {
+  const isLogged = () => {
     const hasUserLogged = Boolean(user.value)
     return hasUserLogged
   }

@@ -3,7 +3,8 @@
     <MainContent>
       <template #header>
         <HeaderLoader :loading="loading">
-          <Header 
+          <Header
+            v-if="session.isLogged()" 
             :profile-pic
             :nickname
             @navigate-to-new-gist="() => router.push('/app/gists/create')"
@@ -12,12 +13,17 @@
             @navigate-to-reports="() => router.push('/app/panel')"
             @logout="handleLogout"
           />
+
+          <HeaderNotAuthenticated 
+            v-else
+            @wants-be-creator="handlerWantsToBeCreator"
+          />
         </HeaderLoader>
       </template>
       <template #content>
         <Splash :loading="loading">
-          <slot />
-        </Splash>
+        <slot />
+      </Splash>
       </template>
     </MainContent>
   </div>
@@ -25,6 +31,7 @@
 
 <script setup lang="ts">
 import Header from '@/modules/auth/components/Header/Header.vue'
+import HeaderNotAuthenticated from '@/modules/landing-page/components/Header/Header.vue'
 import HeaderLoader from '@/modules/auth/components/Header/Loader.vue'
 import { useSession } from '@/modules/auth/composables/useSession/useSession'
 import { useMyself } from '@/modules/users/composables/useMyself/useMyself'
@@ -46,6 +53,10 @@ const handleLogout = async () => {
   if(!error) {
     router.push('/')
   }
+}
+
+const handlerWantsToBeCreator = () => {
+  router.push('/auth/login')
 }
 </script>
 
