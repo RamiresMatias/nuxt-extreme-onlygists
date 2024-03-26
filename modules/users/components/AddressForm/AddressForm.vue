@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import type { ZodFormattedError } from 'zod'
 import type { Address } from '@/modules/users/entities/Address/Address.ts'
 
 const props = defineProps<{
@@ -71,6 +70,6 @@ const address = defineModel<Address>({
 })
 
 const emit = defineEmits<{
-  (e: 'trigger-address-search')
+  (e: 'trigger-address-search'): void
 }>()
 </script>
