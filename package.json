@@ -11,18 +11,21 @@
     "db:generate-types": "npx supabase gen types typescript --local > ./libs/supabase/scheme.ts"
   },
   "dependencies": {
+    "@guolao/vue-monaco-editor": "^1.5.1",
     "@nuxtjs/google-fonts": "^3.1.3",
     "@nuxtjs/supabase": "^1.1.7",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@vueuse/core": "^10.9.0",
     "@wooorm/starry-night": "^3.2.0",
     "axios": "^1.6.8",
+    "detect-programming-language": "^1.0.4",
     "hast-util-to-html": "^9.0.0",
     "marked": "^12.0.1",
     "maska": "^2.1.11",
     "nuxt-primevue": "^0.3.1",
     "primeicons": "^6.0.1",
     "primevue": "^3.49.1",
+    "uuid": "^9.0.1",
     "vue": "^3.4.19",
     "vue-router": "^4.3.0",
     "zod": "^3.22.4"

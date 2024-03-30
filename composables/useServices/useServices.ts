@@ -1,5 +1,7 @@
-import AuthService from '@/modules/auth/services/service'
+import AuthService from '@/modules/auth/services/services'
 import UserServices from '@/modules/users/services/services'
+import GistsService from '@/modules/gists/services/services'
+
 import type { Database } from '@/libs/supabase/scheme'
 import axios from 'axios'
 
@@ -13,6 +15,7 @@ export function useServices() {
     auth: AuthService(supabaseClient, {
       redirectUrl: `${config.public.siteUrl}/auth/github`
     }),
-    users: UserServices(supabaseClient, httpClient)
+    users: UserServices(supabaseClient, httpClient),
+    gists: GistsService(supabaseClient)
   }
 }
