@@ -43,13 +43,14 @@ export function useGistCreate({user}: UseGistCreateOptions) {
   }
 
   const create = async () => {
+    if(!userId.value) return
     try {
       loading.value = true
 
-      await services.gists.create({
+      const response = await services.gists.create({
         ...headline.value,
         ...code.value,
-        profileId: userId.value!
+        profileId: userId.value
       })
 
       toast.add({
@@ -59,6 +60,7 @@ export function useGistCreate({user}: UseGistCreateOptions) {
         life: 2000
       })
       
+      return response
     } catch (error) {
       logAndTrack(error)
     } finally {

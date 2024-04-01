@@ -9,11 +9,17 @@
       :default-language="code.lang"
       :language="code.lang"
     />
+    <small v-if="props.errors?.content">{{ props.errors.content._errors[0] }}</small>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Code } from '@/modules/gists/entities/Gist/Gist'
+import type { ZodFormattedError } from 'zod'
+
+const props = defineProps<{
+  errors?: ZodFormattedError<Code>
+}>()
 
 const DEFAULT_CODE = `
 interface User {

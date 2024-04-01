@@ -8,7 +8,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <label for="gist-price">Preço</label>
-        <SelectButton v-model="headline.price" :options="priceOptions" option-value="value" option-label="name" />
+        <SelectButton v-model="headline.price" :options="priceOptions" option-value="price" option-label="name" />
       </div>
     </div>
     <div class="flex flex-col gap-2">

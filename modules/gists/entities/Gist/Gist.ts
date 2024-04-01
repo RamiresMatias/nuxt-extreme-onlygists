@@ -5,7 +5,7 @@ export interface Gist {
   title: string
   profileId: string
   description: string
-  isPaid: string
+  isPaid: boolean
   lang: string
   price: number
   content: string
