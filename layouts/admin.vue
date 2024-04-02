@@ -6,7 +6,7 @@
           <Header 
             :profile-pic
             :nickname
-            @navigate-to-new-gist="() => router.push('/app/gists/create')"
+            @navigate-to-new-gist="() => router.push('/app/gist/create')"
             @navigate-to-profile-edit="() => router.push('/app/profile/edit')"
             @navigate-to-sales="() => router.push('/app/sales/all')"
             @navigate-to-reports="() => router.push('/app/panel')"

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 import type { Database } from '@/libs/supabase/scheme'
-import type { CreateOptions } from '@/modules/gists/services/types'
+import type { CreateOptions, UpdateOptions } from '@/modules/gists/services/types'
 import { v4 as uuidv4 } from 'uuid'
 import { readOneAdapter, type ReadOneRow } from "@/modules/gists/services/adapters"
 
@@ -44,5 +44,23 @@ export default (client: SupabaseClient<Database>) => ({
       .single()
 
     return readOneAdapter(response.data)
+  },
+
+  async update(id: string, {title, description, price, content, lang}: UpdateOptions) {
+    const isPaid = price !== 0
+
+    await client
+      .from('gists')
+      .update({
+        title,
+        description,
+        price,
+        content,
+        lang,
+        is_paid: isPaid
+      })
+      .match({id})
+
+    return { id }
   }
 })

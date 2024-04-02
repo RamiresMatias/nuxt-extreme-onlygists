@@ -53,5 +53,13 @@ const registerSyntaxHighlight = async () => {
   loading.value = false
 }
 
-onMounted(() => registerSyntaxHighlight())
+watch(
+  () => props.code,
+  () => {
+    registerSyntaxHighlight()
+  },
+  {immediate: true}
+)
+
+
 </script>
