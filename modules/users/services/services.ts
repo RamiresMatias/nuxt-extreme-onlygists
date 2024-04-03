@@ -36,5 +36,15 @@ export default (client: SupabaseClient<Database>, httpClient: AxiosInstance) => 
     }).eq('id', id)
 
     return { id }
+  },
+  async readOneByUsername(username: string) {
+    const response = await client.from('profiles')
+      .select()
+      .eq('username', username)
+      .limit(1)
+      .single()
+
+    const user = getMySelfAdapter(response.data)
+    return user
   }
 })

@@ -9,18 +9,31 @@
     </ClientOnly>
   </WidgetDefault>
 
-  <Button 
-    @click="handleCreateGist" 
-    :loading="loading"
-    class="mt-5 w-full md:w-auto"
-    label="Criar"
-    icon="pi pi-plus"
-    icon-pos="right"
-  />
+  <div class="flex gap-2">
+    <Button 
+      @click="handleUpdateGist" 
+      :loading="loading"
+      class="mt-5 w-full md:w-auto"
+      label="Atualizar"
+      icon="pi pi-pencil"
+      icon-pos="right"
+    />
+
+    <Button 
+      @click="handleDeleteGist()" 
+      :loading="loadingRemove"
+      class="mt-5 w-full md:w-auto"
+      label="Deletar"
+      severity="danger"
+    />
+    <ConfirmDialog />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { useGistCreate } from '@/modules/gists/composables/useGistCreate/useGistCreate'
+import { useGistUpdate } from '@/modules/gists/composables/useGistUpdate/useGistUpdate'
+import { useGistDelete } from '@/modules/gists/composables/useGistDelete/useGistDelete'
+import { useGist } from '@/modules/gists/composables/useGist/useGist'
 
 import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 
@@ -31,16 +44,21 @@ import CodeEdit from '@/modules/gists/components/CodeEdit/CodeEdit.vue'
 
 const { user } = inject(myselfKey) as MyselfContextProvider
 
+const confirm = useConfirm()
 const router = useRouter()
+const route = useRoute()
 
-const { loading, errors, headline, code, safeParse, create } = useGistCreate({user})
+const { gist } = useGist({ id: route.params.id as string})
 
-const handleCreateGist = async () => {
+const { loading, errors, headline, code, safeParse, update } = useGistUpdate({ gist })
+const { loading: loadingRemove, remove } = useGistDelete({ gist })
+
+const handleUpdateGist = async () => {
   const isValid = safeParse().success
 
   if(!isValid) return
 
-  const response = await create()
+  const response = await update()
 
   if(response?.id) {
     router.push(`/${user.value?.username}/gist/${response.id}`)
@@ -49,5 +67,18 @@ const handleCreateGist = async () => {
 
 const handleLanguageChange = (lang: string) => {
   code.value.lang = lang
+}
+
+const handleDeleteGist = () => {
+  confirm.require({
+    header: 'Apagar Gist',
+    message: 'Tem certeza que deseja apagar esse gist?',
+    rejectLabel: 'Voltar',
+    acceptLabel: 'Quero apagar',
+    accept: async () => {
+      await remove()
+      router.push(`/${user.value?.username}`)
+    }
+  })
 }
 </script>

@@ -62,5 +62,10 @@ export default (client: SupabaseClient<Database>) => ({
       .match({id})
 
     return { id }
+  },
+
+  async delete(id: string) {
+    await client.fromt('gists').delete().match({ id })
+    return { id }
   }
 })

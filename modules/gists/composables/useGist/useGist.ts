@@ -8,7 +8,7 @@ export function useGist({id}: useGistOptions) {
   const { logAndTrack } = useLogger()
   const services = useServices()
   const loading = ref<boolean>()
-  const gist = ref<GistVirtual | null>()
+  const gist = ref<GistVirtual | undefined>()
 
   const fetchGistById = async () => {
     loading.value = true
