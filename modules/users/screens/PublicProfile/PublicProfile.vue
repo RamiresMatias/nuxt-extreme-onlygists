@@ -10,10 +10,10 @@
   />
   <PublicHeadlineEmpty v-else />
   <WidgetGroup>
-    <WidgetGroupLoader :loading="false" :amount="3">
-      <WidgetCondensed label="Gists do total" :value="10" />
-      <WidgetCondensed label="Gists gratuitos" :value="5" />
-      <WidgetCondensed label="Gists pagos" :value="5" />
+    <WidgetGroupLoader :loading="reportLoading" :amount="3">
+      <WidgetCondensed label="Total de Gists" :value="totalGists" />
+      <WidgetCondensed label="Gists gratuitos" :value="totalFreeGists" />
+      <WidgetCondensed label="Gists pagos" :value="totalPaidGists" />
     </WidgetGroupLoader>
   </WidgetGroup>
 
@@ -42,15 +42,24 @@ import WidgetCondensed from '@/modules/reports/components/Widgets/Condensed/Cond
 import GistsCardGroup from '@/modules/gists/components/Card/Group/Group.vue'
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vue'
+import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 
 const route = useRoute()
 const router = useRouter()
 const services = useServices()
 
+
 const {data: user} = await useAsyncData('user-public-profile', () => {
   const username = route.params.username as string
   return services.users.readOneByUsername(username)
 })
+const {
+  totalFreeGists,
+  totalGists,
+  totalPaidGists,
+  totalSoldGists,
+  loading: reportLoading
+} = useGistsReport({user, isMyself: false})
 
 const handleNavigateToDetail = (id: string) => {
   const {username} = route.params

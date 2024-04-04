@@ -40,7 +40,7 @@ export default (client: SupabaseClient<Database>, httpClient: AxiosInstance) => 
   async readOneByUsername(username: string) {
     const response = await client.from('profiles')
       .select()
-      .eq('username', username)
+      .ilike('username', `%${username}%`)
       .limit(1)
       .single()
 
