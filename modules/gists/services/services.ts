@@ -1,8 +1,9 @@
 import type { SupabaseClient } from "@supabase/supabase-js"
 import type { Database } from '@/libs/supabase/scheme'
-import type { CreateOptions, UpdateOptions } from '@/modules/gists/services/types'
+import type { CreateOptions, ReadAllOptions, UpdateOptions } from '@/modules/gists/services/types'
 import { v4 as uuidv4 } from 'uuid'
-import { readOneAdapter, type ReadOneRow } from "@/modules/gists/services/adapters"
+import { readOneAdapter, readAllAdapter } from "@/modules/gists/services/adapters"
+import type { ReadOneRow, ReadAllRow } from "@/modules/gists/services/adapters"
 
 export default (client: SupabaseClient<Database>) => ({
   async create({title, description, price, content, lang, profileId}: CreateOptions) {
@@ -67,5 +68,29 @@ export default (client: SupabaseClient<Database>) => ({
   async delete(id: string) {
     await client.fromt('gists').delete().match({ id })
     return { id }
+  },
+
+  async readAll({username, from = 0, to = 10}: ReadAllOptions) {
+    const [totalResponse, gistsResponse] = await Promise.all([
+      // count
+      client
+        .from('gists')
+        .select('profiles!inner(id, username)', {count: 'exact', head: true})
+        .ilike('profiles.username', `%${username}%`),
+
+      // gists
+      client
+        .from('gists')
+        .select('id, title, description, is_paid, price, lang, created_at, profiles!inner(id, username)')
+        .ilike('profiles.username', `%${username}%`)
+        .order('created_at', {ascending: true})
+        .range(from, to)
+        .returns<ReadAllRow[]>()
+    ])
+
+    return {
+      total: totalResponse.count ?? 0,
+      results: readAllAdapter(gistsResponse.data)
+    }
   }
 })

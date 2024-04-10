@@ -9,7 +9,7 @@
     class="my-10"
   />
   <PublicHeadlineEmpty v-else />
-  <WidgetGroup>
+  <WidgetGroup v-if="user">
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed label="Total de Gists" :value="totalGists" />
       <WidgetCondensed label="Gists gratuitos" :value="totalFreeGists" />
@@ -17,16 +17,18 @@
     </WidgetGroupLoader>
   </WidgetGroup>
 
-  <WidgetDefault title="Todos os gists">
+  <WidgetDefault v-if="gists.length" title="Todos os gists">
     <GistsCardGroup>
-      <GistCardGroupLoader :loading="false" :amount="4">
+      <GistCardGroupLoader :loading="loading" :amount="4">
         <GistCardItem 
+          v-for="gist in gists"
+          :key="gist.id"
           @tap="handleNavigateToDetail"
-          id="123"
-          title="usecurrentuser.ts"
-          description="Hook para controlar a **store** do usuário"
-          :price="10"
-          lang="Typescript" 
+          :id="gist.id"
+          :title="gist.title"
+          :description="gist.description"
+          :price="gist.price"
+          :lang="gist.lang" 
         />
       </GistCardGroupLoader>
     </GistsCardGroup>
@@ -43,11 +45,12 @@ import GistsCardGroup from '@/modules/gists/components/Card/Group/Group.vue'
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vue'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
+import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
+import { useScroll } from '@vueuse/core'
 
 const route = useRoute()
 const router = useRouter()
 const services = useServices()
-
 
 const {data: user} = await useAsyncData('user-public-profile', () => {
   const username = route.params.username as string
@@ -60,6 +63,25 @@ const {
   totalSoldGists,
   loading: reportLoading
 } = useGistsReport({user, isMyself: false})
+
+const {
+  gists,
+  loading,
+  fetchMoreGistsByUsername
+} = useGistList({ username: route.params.username as string })
+
+const { arrivedState } = useScroll(window, {
+  offset: { bottom: 100 }
+})
+
+watch(
+  () => arrivedState.bottom,
+  () => {
+    if (!arrivedState.bottom && !loading.value) return
+    
+    fetchMoreGistsByUsername()
+  }
+)
 
 const handleNavigateToDetail = (id: string) => {
   const {username} = route.params

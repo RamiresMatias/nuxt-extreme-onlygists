@@ -5,3 +5,9 @@ export type CreateOptions = Headline & Code & {
 }
 
 export type UpdateOptions = Partial<Headline> & Partial<Code>
+
+export type ReadAllOptions = {
+  username: string
+  to?: number
+  from?: number
+}

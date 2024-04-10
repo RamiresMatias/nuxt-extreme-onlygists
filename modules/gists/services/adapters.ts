@@ -8,6 +8,10 @@ export type ReadOneRow = GistTable['Row'] & {
   profiles: ProfileTableRow['Row'] | null
 }
 
+export type ReadAllRow = GistTable['Row'] & {
+  profiles: ProfileTableRow['Row'] | null
+}
+
 export function readOneAdapter(data: ReadOneRow | null): GistVirtual | null {
   if(!data) return null
 
@@ -27,3 +31,24 @@ export function readOneAdapter(data: ReadOneRow | null): GistVirtual | null {
     createdAt: new Date(data.created_at)
   }
 }
+
+export function readAllAdapter(values: ReadAllRow[] | null): GistVirtual[] | [] {
+  if(!values) return []
+
+  return values.map((data) => ({
+    id: data.id,
+    title: data.title,
+    profileId: data.profile_id ?? '',
+    description: data.description,
+    isPaid: data.is_paid,
+    price: data.price,
+    profiles: {
+      id: data.profiles?.id,
+      username: data.profiles?.username
+    },
+    lang: data.lang,
+    content: data.content,
+    createdAt: new Date(data.created_at)
+  })) 
+}
+

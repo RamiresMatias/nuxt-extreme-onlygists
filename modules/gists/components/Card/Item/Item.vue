@@ -8,7 +8,7 @@
         </div>
       </template>
       <template #content>
-        <div v-html="description"></div>
+        <div v-html="description" class="line-clamp-1"></div>
       </template>
       <template #footer>
         <Button 
