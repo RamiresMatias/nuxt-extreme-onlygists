@@ -2,6 +2,7 @@ import AuthService from '@/modules/auth/services/services'
 import UserServices from '@/modules/users/services/services'
 import GistsService from '@/modules/gists/services/services'
 import ReportService from '@/modules/reports/services/services'
+import PaymentService from '@/modules/payments/services/services'
 
 import type { Database } from '@/libs/supabase/scheme'
 import axios from 'axios'
@@ -18,6 +19,7 @@ export function useServices() {
     }),
     users: UserServices(supabaseClient, httpClient),
     gists: GistsService(supabaseClient),
-    reports: ReportService(supabaseClient)
+    reports: ReportService(supabaseClient),
+    payments: PaymentService(supabaseClient)
   }
 }

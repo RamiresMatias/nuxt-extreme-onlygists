@@ -4,7 +4,7 @@ export interface Sale {
   id: string
   gistId: string
   customerEmail: string
-  createdAt: string
+  createdAt: Date
 }
 
 export interface SaleVirtual extends Sale {
