@@ -9,4 +9,8 @@ definePageMeta({
   layout: 'admin',
   middleware: ['auth']
 })
+
+useHead({
+  title: 'Criar novo gist | 🥺 onlygists'
+})
 </script>

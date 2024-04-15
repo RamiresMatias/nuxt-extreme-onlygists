@@ -39,7 +39,7 @@ export default (client: SupabaseClient<Database>) => ({
   async totalRevenue(userId: string) {
     const response = await client
       .from('sales')
-      .select('gists(price, profile_id')
+      .select('gists(price, profile_id)')
       .match({ 'gists.profile_id': userId})
       .returns<RevenueRow[]>()
 

@@ -21,9 +21,8 @@
         </HeaderLoader>
       </template>
       <template #content>
-        <Splash :loading="loading">
+        <Splash :loading="loading" />
         <slot />
-      </Splash>
       </template>
     </MainContent>
   </div>

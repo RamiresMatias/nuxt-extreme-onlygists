@@ -8,6 +8,6 @@ CREATE TABLE profiles(
   phone varchar,
   avatar_url varchar not null,
   address jsonb,
-  create_at timestamp with time zone default current_timestamp not null,
+  created_at timestamp with time zone default current_timestamp not null,
   payment_connected_account varchar
 )

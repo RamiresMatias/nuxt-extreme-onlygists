@@ -18,4 +18,12 @@ const router = useRouter()
 const handleLogin = () => {
   router.push('/auth/login')
 }
+
+defineOgImage({
+  component: 'Main',
+  props: {
+    title: 'OnlyGists',
+    description: 'Compartilhe e monetiza trechos de código.'
+  }
+})
 </script>

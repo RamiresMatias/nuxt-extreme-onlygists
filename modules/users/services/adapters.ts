@@ -18,7 +18,7 @@ export function getMySelfAdapter(data: Row | null): User | null {
     site: data.site ?? undefined,
     phone: data.phone ?? undefined,
     address,
-    createdAt: new Date(data.create_at),
+    createdAt: new Date(data.created_at),
     bio: data.bio ?? undefined
   }
 }

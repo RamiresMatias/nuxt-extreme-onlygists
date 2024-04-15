@@ -1,15 +1,17 @@
-import path from 'path'
+import path from "path"
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxtjs/tailwindcss',
-    '@nuxtjs/google-fonts',
-    'nuxt-primevue',
-    '@nuxtjs/supabase'
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/google-fonts",
+    "nuxt-primevue",
+    "@nuxtjs/supabase",
+    "@nuxtjs/color-mode",
+    "@nuxtjs/seo"
   ],
-  css: ['primeicons/primeicons.css'],
+  css: ["primeicons/primeicons.css"],
   googleFonts: {
     base64: true,
     fontsDir: "assets/fonts",
@@ -21,15 +23,15 @@ export default defineNuxtConfig({
   primevue: {
     options: { unstyled: true },
     importPT: {
-      as: 'lara',
+      as: "lara",
       from: path.resolve(__dirname, "./assets/presets/lara")
     }
   },
   imports: {
     dirs: [
-      './composables/useMarkdown', 
-      './composables/useServices',
-      './composables/useLogger'
+      "./composables/useMarkdown", 
+      "./composables/useServices",
+      "./composables/useLogger"
     ]
   },
   runtimeConfig: {
@@ -42,5 +44,14 @@ export default defineNuxtConfig({
   },
   supabase: {
     redirect: false
+  },
+  ogImage: {
+    fonts: [
+      'Inter:400',
+      'Inter:700'
+    ]
+  },
+  site: {
+    url: process.env.SITE_URL,
   }
 })

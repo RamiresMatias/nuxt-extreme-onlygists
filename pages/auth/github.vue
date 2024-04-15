@@ -7,4 +7,8 @@ import OAuthRedirect from '@/modules/auth/screens/OAuthRedirect/OAuthRedirect.vu
 definePageMeta({
   layout: 'default'
 })
+
+useHead({
+  title: 'Redirecionamento... | 🥺 onlygists'
+})
 </script>

@@ -8,4 +8,8 @@ import Login from '@/modules/auth/screens/Login/Login.vue'
 definePageMeta({
   layout: 'default'
 })
+
+useHead({
+  title: 'Entrar | 🥺 onlygists'
+})
 </script>

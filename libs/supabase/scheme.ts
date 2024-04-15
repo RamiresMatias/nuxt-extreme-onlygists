@@ -83,7 +83,7 @@ export type Database = {
           address: Json | null
           avatar_url: string
           bio: string | null
-          create_at: string
+          created_at: string
           email: string
           id: string
           name: string
@@ -96,7 +96,7 @@ export type Database = {
           address?: Json | null
           avatar_url: string
           bio?: string | null
-          create_at?: string
+          created_at?: string
           email: string
           id: string
           name: string
@@ -109,7 +109,7 @@ export type Database = {
           address?: Json | null
           avatar_url?: string
           bio?: string | null
-          create_at?: string
+          created_at?: string
           email?: string
           id?: string
           name?: string
@@ -130,19 +130,19 @@ export type Database = {
       }
       sales: {
         Row: {
-          create_at: string
+          created_at: string
           customer_email: string
           gists_id: string | null
           id: string
         }
         Insert: {
-          create_at?: string
+          created_at?: string
           customer_email: string
           gists_id?: string | null
           id: string
         }
         Update: {
-          create_at?: string
+          created_at?: string
           customer_email?: string
           gists_id?: string | null
           id?: string

@@ -10,6 +10,10 @@ import PublicProfile from '~/modules/users/screens/PublicProfile/PublicProfile.v
 definePageMeta({
   layout: 'checkout'
 })
+
+useHead({
+  title: 'Perfil do usuário | 🥺 onlygists'
+})
 </script>
 
 <style scoped>

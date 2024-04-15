@@ -19,7 +19,7 @@ export function readAllSalesAdapter(values: ReadAllSalesRow[] | null): SaleVirtu
       title: data.gists?.title ?? '',
       price: data.gists?.price ?? 0,
     },
-    createdAt: new Date(data.create_at)
+    createdAt: new Date(data.created_at)
   }))
 }
 

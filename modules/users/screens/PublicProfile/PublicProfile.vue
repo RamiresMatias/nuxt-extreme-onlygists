@@ -4,8 +4,8 @@
     :avatar-url="user.avatarUrl"
     :name="user.name"
     :bio="user.bio"
-    :city="user.address.city"
-    :state="user.address.state"
+    :city="user.address?.city"
+    :state="user.address?.state"
     class="my-10"
   />
   <PublicHeadlineEmpty v-else />
@@ -88,4 +88,20 @@ const handleNavigateToDetail = (id: string) => {
 
   router.push(`/${username}/gists/${id}`)
 }
+
+defineOgImage({
+  component: 'PublicProfile',
+  props: {
+    avatarUrl: user.value?.avatarUrl,
+    author: user.value?.name,
+    bio: user.value?.bio
+  }
+})
+
+useSeoMeta({
+  title: `${user.value?.name} - @${user.value?.username}`,
+  ogTitle: `${user.value?.name} - @${user.value?.username}`,
+  description: `Veja os gists de ${user.value?.name} no onlygists`,
+  ogDescription: `Veja os gists de ${user.value?.name} no onlygists`
+})
 </script>
