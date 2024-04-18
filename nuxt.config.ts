@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     "nuxt-primevue",
     "@nuxtjs/supabase",
     "@nuxtjs/color-mode",
-    "@nuxtjs/seo"
+    "@nuxtjs/seo",
+    "@unlok-co/nuxt-stripe"
   ],
   css: ["primeicons/primeicons.css"],
   googleFonts: {
@@ -53,5 +54,13 @@ export default defineNuxtConfig({
   },
   site: {
     url: process.env.SITE_URL,
+  },
+  stripe: {
+    client: {
+      key: process.env.STRIPE_CLIENT_KEY,
+    },
+    server: {
+      key: process.env.STRIPE_SERVER_KEY
+    }
   }
 })

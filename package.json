@@ -17,6 +17,7 @@
     "@nuxtjs/supabase": "^1.1.7",
     "@nuxtjs/tailwindcss": "^6.11.4",
     "@types/uuid": "^9.0.8",
+    "@unlok-co/nuxt-stripe": "^3.0.0",
     "@vueuse/core": "^10.9.0",
     "@wooorm/starry-night": "^3.2.0",
     "axios": "^1.6.8",
