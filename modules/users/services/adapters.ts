@@ -19,7 +19,9 @@ export function getMySelfAdapter(data: Row | null): User | null {
     phone: data.phone ?? undefined,
     address,
     createdAt: new Date(data.created_at),
-    bio: data.bio ?? undefined
+    bio: data.bio ?? undefined,
+    email: data.email,
+    paymentConnectedAccount: data.payment_connected_account ?? ''
   }
 }
 

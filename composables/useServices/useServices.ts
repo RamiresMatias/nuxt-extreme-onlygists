@@ -12,6 +12,9 @@ export function useServices() {
   const supabaseClient = useSupabaseClient<Database>()
   const config = useRuntimeConfig()
   const httpClient = axios.create()
+  const paymentHttpClient = axios.create({
+    baseURL: '/api'
+  })
 
   return {
     auth: AuthService(supabaseClient, {
@@ -20,6 +23,6 @@ export function useServices() {
     users: UserServices(supabaseClient, httpClient),
     gists: GistsService(supabaseClient),
     reports: ReportService(supabaseClient),
-    payments: PaymentService(supabaseClient)
+    payments: PaymentService(supabaseClient, paymentHttpClient)
   }
 }

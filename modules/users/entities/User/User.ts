@@ -10,4 +10,6 @@ export interface User {
   phone?: string
   address: Address
   createdAt?: Date
+  paymentConnectedAccount?: string
+  email: string
 }

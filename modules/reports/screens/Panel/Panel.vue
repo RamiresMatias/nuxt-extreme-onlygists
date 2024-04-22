@@ -1,4 +1,5 @@
 <template>
+  <PaymentSetupAlert v-if="!isValid" :loading="paymentCreateLoading" @setup="handlePaymentSetup" />
   <WidgetGroup v-if="user">
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed label="Total de Gists" :value="totalGists" />
@@ -32,11 +33,15 @@ import WidgetCondensed from '@/modules/reports/components/Widgets/Condensed/Cond
 import GistsCardGroup from '@/modules/gists/components/Card/Group/Group.vue'
 import GistCardItem from '@/modules/gists/components/Card/Item/Item.vue'
 import GistCardGroupLoader from '@/modules/gists/components/Card/Group/Loader.vue'
+import PaymentSetupAlert from '@/modules/payments/components/PaymentSetupAlert/PaymentSetupAlert.vue'
 
-import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
+import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import { useGistsReport } from '@/modules/reports/composables/useGistsReport/useGistsReport'
 import { useGistList } from '@/modules/gists/composables/useGistList/useGistList'
+import { useStripeAccountCreate } from '@/modules/payments/composables/useStripeAccountCreate/useStripeAccountCreate'
+import { useStripeAccountValidate } from '@/modules/payments/composables/useStripeAccountValidate/useStripeAccountValidate'
+
 import { useScroll } from '@vueuse/core'
 
 
@@ -71,7 +76,24 @@ const {
   fetchMoreGistsByUsername
 } = useGistList({ username: user.value?.username! })
 
+const { loading: paymentCreateLoading, create } = useStripeAccountCreate()
+const { isValid, validate } = useStripeAccountValidate()
+
 const handleNavigateToDetail = (id: string) => {
   router.push(`/${user.value?.username}/gist/${id}`)
 }
+
+const handlePaymentSetup = async () => {
+  const response = await create(user.value?.email!)
+
+  if (!response) {
+    return
+  }
+
+  window.location.href = response.onboardingUrl
+}
+
+onMounted(() => {
+  validate(user.value?.paymentConnectedAccount)
+})
 </script>
