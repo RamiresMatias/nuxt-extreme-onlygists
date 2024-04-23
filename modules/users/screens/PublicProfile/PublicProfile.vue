@@ -86,7 +86,7 @@ watch(
 const handleNavigateToDetail = (id: string) => {
   const {username} = route.params
 
-  router.push(`/${username}/gists/${id}`)
+  router.push(`/${username}/gist/${id}`)
 }
 
 defineOgImage({

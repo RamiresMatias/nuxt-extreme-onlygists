@@ -10,7 +10,8 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxtjs/color-mode",
     "@nuxtjs/seo",
-    "@unlok-co/nuxt-stripe"
+    "@unlok-co/nuxt-stripe",
+    "@vue-email/nuxt"
   ],
   css: ["primeicons/primeicons.css"],
   googleFonts: {
@@ -39,6 +40,9 @@ export default defineNuxtConfig({
     stripeProductId5BRL: process.env.STRIPE_PRODUCT_ID_5BRL,
     stripeProductId10BRL: process.env.STRIPE_PRODUCT_ID_10BRL,
     stripeProductId25BRL: process.env.STRIPE_PRODUCT_ID_25BRL,
+    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    resendKey: process.env.RESEND_KEY,
+
     public: {
       siteUrl: process.env.SITE_URL,
       nodeEnv: process.env.NODE_ENV,

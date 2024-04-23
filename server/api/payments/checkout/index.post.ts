@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
   const response = await supabase
     .from('profiles')
     .select('payment_connected_account')
-    .eq('username', username)
+    .ilike('username', `%${username}%`)
     .maybeSingle()
 
   if (!response?.data) {

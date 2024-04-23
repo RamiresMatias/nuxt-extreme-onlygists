@@ -13,6 +13,7 @@ export function useStripeCheckout() {
         gistId,
         price
       })
+      checkoutUrl.value = response.data.checkoutUrl 
       return response.data.checkoutUrl
     } catch (error) {
       logAndTrack(error)

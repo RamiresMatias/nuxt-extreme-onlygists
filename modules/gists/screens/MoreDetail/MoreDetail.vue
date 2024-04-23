@@ -20,14 +20,16 @@
 
   <div v-if="gist" class="flex flex-col md:flex-row gap-2">
     <Button 
-      label="Comprar por 10"
+      v-if="gist && user?.username?.toLowerCase() !== usernameRoute"
+      :label="`Comprar por ${gist.price}`"
       class="mt-5 w-full md:w-auto"
       icon-pos="right"
-      icon="pi pi-shopping-bag"    
+      icon="pi pi-shopping-bag"
+      @click="handlePay"
     />
 
     <Button 
-      v-if="isLogged() && user?.username === route.params.username"
+      v-if="isLogged() && user?.username === usernameRoute"
       label="Editar este gist"
       class="mt-5 w-full md:w-auto"
       icon-pos="right"
@@ -49,6 +51,8 @@ import LazyDialogPaymentSuccess from '@/modules/payments/components/DialogPaymen
 import LazyDialogPaymentError from '@/modules/payments/components/DialogPaymentError/DialogPaymentError.vue'
 
 import { useGistContent } from '@/modules/gists/composables/useGistContent/useGistContent'
+import { useStripeCheckout } from '@/modules/payments/composables/useStripeCheckout/useStripeCheckout'
+
 import { useSession } from '@/modules/auth/composables/useSession/useSession'
 import { myselfKey } from '@/modules/users/composables/useMyself/useMyself'
 import type { MyselfContextProvider } from '@/modules/users/composables/useMyself/types'
@@ -68,6 +72,8 @@ const clickHandlerNavigateToGistEdit = () => {
   router.push(`/app/gist/${route.params.id}/edit`)
 }
 
+const usernameRoute = computed(() => (route.params.username as string).toLowerCase())
+
 /**
  * @info Carrega a informação no lado do servidor (Server-Side Rendering)
  * facilitando a indexação da página no Google
@@ -76,6 +82,8 @@ const { data: gist, pending: loading} = await useAsyncData('gist-detail', () => 
   return services.gists.readOne(gistId)
 })
 const {gistContent, loading: loadingContent} = useGistContent({gist})
+
+const { checkoutUrl, createCheckoutUrl } = useStripeCheckout()
 
 onMounted(() => {
   const {success_payment, fail_payment} = route.query
@@ -99,4 +107,17 @@ useSeoMeta({
   description: `Veja o gist de ${gist.value?.profiles.name} no onlygists`,
   ogDescription: `Veja o gist de ${gist.value?.profiles.name} no onlygists`,
 })
+
+const handlePay = async () => {
+  await createCheckoutUrl({
+    username: route.params.username as string,
+    gistId: route.params.id as string,
+    price: String(gist.value?.price)
+  })
+
+  console.log(checkoutUrl.value);
+  if (!checkoutUrl.value) return
+
+  window.location.href = checkoutUrl.value
+}
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <PaymentSetupAlert v-if="!isValid" :loading="paymentCreateLoading" @setup="handlePaymentSetup" />
+  <PaymentSetupAlert v-if="!isValid && !paymentCreateLoading" :loading="paymentCreateLoading" @setup="handlePaymentSetup" />
   <WidgetGroup v-if="user">
     <WidgetGroupLoader :loading="reportLoading" :amount="3">
       <WidgetCondensed label="Total de Gists" :value="totalGists" />
