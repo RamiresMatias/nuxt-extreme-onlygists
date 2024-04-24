@@ -6,12 +6,11 @@ export function useStripeCheckout() {
   const services = useServices()
   const checkoutUrl = ref<string>()
 
-  const createCheckoutUrl = async ({ username, gistId, price }: CreateCheckoutOptions) => {
+  const createCheckoutUrl = async ({ username, gistId }: CreateCheckoutOptions) => {
     try {
       const response = await services.payments.createCheckout({
         username,
-        gistId,
-        price
+        gistId
       })
       checkoutUrl.value = response.data.checkoutUrl 
       return response.data.checkoutUrl

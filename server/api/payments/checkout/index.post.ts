@@ -4,6 +4,8 @@ import { Database } from '@/libs/supabase/scheme'
 
 import { zh } from 'h3-zod'
 import z from 'zod'
+import { GistTable } from '~/modules/gists/services/adapters'
+import { readOneSimpleAdapter } from './adapters'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
@@ -13,8 +15,6 @@ export default defineEventHandler(async (event) => {
     z.object({
       username: z.string(),
       gistId: z.string(),
-      // @TODO: Melhorar lógica para não passar o preço por requisição
-      price: z.string(),
     })
   )
 
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const { price, username, gistId } = body.data
+  const { username, gistId } = body.data
 
   const prices: Record<string, string> = {
     '5': config.stripeProductId5BRL,
@@ -33,18 +33,27 @@ export default defineEventHandler(async (event) => {
     '25': config.stripeProductId25BRL,
   }
 
-  const allowedGistPrices = Object.keys(prices)
+  const supabase = await serverSupabaseClient<Database>(event)
 
-  if (!allowedGistPrices.includes(price)) {
+  const { data } = await supabase
+    .from('gists')
+    .select('id, price')
+    .match({ id: gistId })
+    .returns<GistTable['Row']>()
+    .single()
+
+  const gist = readOneSimpleAdapter(data)
+  if (!gist) {
     throw createError({
       status: 400,
-      statusMessage: `Preço ${price} do gist não é valido`
+      statusMessage: `Gist não encontrado!`
     })
   }
 
-  const stripe = await useServerStripe(event)
-  const supabase = await serverSupabaseClient<Database>(event)
+  const price = String(gist.price)
 
+  const stripe = await useServerStripe(event)
+  
   const response = await supabase
     .from('profiles')
     .select('payment_connected_account')

@@ -1,7 +1,7 @@
 import type { GistVirtual } from "@/modules/gists/entities/Gist/Gist"
 import type { Database } from "@/libs/supabase/scheme"
 
-type GistTable = Database['public']['Tables']['gists']
+export type GistTable = Database['public']['Tables']['gists']
 type ProfileTableRow = Database['public']['Tables']['profiles']
 
 export type ReadOneRow = GistTable['Row'] & {

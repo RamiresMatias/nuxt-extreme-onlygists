@@ -111,8 +111,7 @@ useSeoMeta({
 const handlePay = async () => {
   await createCheckoutUrl({
     username: route.params.username as string,
-    gistId: route.params.id as string,
-    price: String(gist.value?.price)
+    gistId: route.params.id as string
   })
 
   console.log(checkoutUrl.value);
