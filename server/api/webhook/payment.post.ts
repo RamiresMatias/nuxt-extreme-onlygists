@@ -53,22 +53,22 @@ export default defineEventHandler(async (event) => {
   const buffer = await zip.generateAsync({ type: 'nodebuffer' })
   const resend = new Resend(config.resendKey)
 
-  // const template = await useCompiler('GistSale.vue', {
-  //   props: {
-  //     name: paymentIntentEvent.customer_details.name
-  //   }
-  // })
+  const template = await useCompiler('GistSale.vue', {
+    props: {
+      name: paymentIntentEvent.customer_details.name
+    }
+  })
 
-  // resend.emails.send({
-  //   from: 'ramires@onlygistscode.com',
-  //   to: paymentIntentEvent.customer_details.email,
-  //   subject: 'Parabéns para compra do seu Gist',
-  //   html: template.html,
-  //   attachments: [
-  //     {
-  //       filename: `${gist.data?.title}.zip`,
-  //       content: buffer
-  //     }
-  //   ]
-  // })
+  resend.emails.send({
+    from: 'ramires@onlygistscode.com',
+    to: paymentIntentEvent.customer_details.email,
+    subject: 'Parabéns para compra do seu Gist',
+    html: template.html,
+    attachments: [
+      {
+        filename: `${gist.data?.title}.zip`,
+        content: buffer
+      }
+    ]
+  })
 })

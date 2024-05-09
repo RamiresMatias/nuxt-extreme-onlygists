@@ -69,5 +69,12 @@ export default defineNuxtConfig({
     server: {
       key: process.env.STRIPE_SERVER_KEY
     }
+  },
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'esnext'
+      }
+    }
   }
 })
