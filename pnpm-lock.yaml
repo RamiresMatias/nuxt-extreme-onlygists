@@ -29,9 +29,6 @@ importers:
       '@unlok-co/nuxt-stripe':
         specifier: ^3.0.0
         version: 3.0.0(rollup@4.13.0)
-      '@vue-email/nuxt':
-        specifier: ^0.8.19
-        version: 0.8.19(rollup@4.13.0)(typescript@5.4.3)(vue@3.4.21(typescript@5.4.3))
       '@vueuse/core':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.21(typescript@5.4.3))
@@ -93,6 +90,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^7.1.1
         version: 7.4.0(eslint@8.57.0)(typescript@5.4.3)
+      '@vue-email/nuxt':
+        specifier: ^0.8.19
+        version: 0.8.19(rollup@4.13.0)(typescript@5.4.3)(vue@3.4.21(typescript@5.4.3))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
